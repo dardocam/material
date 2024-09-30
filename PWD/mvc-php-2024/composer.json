@@ -1,0 +1,13 @@
+{
+    "name": "dardo/mvc-php-2024",
+    "autoload": {
+        "classmap": ["private/helpers/","private/core/","private/models/"]
+      },
+    "authors": [
+        {
+            "name": "Dardo Camaño",
+            "email": "dardocam@gmail.com"
+        }
+    ],
+    "require": {}
+}

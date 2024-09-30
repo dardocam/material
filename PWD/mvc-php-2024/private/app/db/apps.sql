@@ -1,0 +1,109 @@
+-- Bases de datos - apps
+-- MySql
+-- Dardo Camaño -
+DROP TABLE IF EXISTS USUARIO;
+DROP TABLE IF EXISTS STOCK;
+DROP TABLE IF EXISTS MBASE;
+DROP TABLE IF EXISTS MEDICAMENTO;
+DROP TABLE IF EXISTS PACIENTE;
+
+-- Table:  Usuario
+CREATE TABLE USUARIO
+(
+  _id_usuario VARCHAR(255) NOT NULL UNIQUE,
+  _name VARCHAR(255) NOT NULL,
+  _email VARCHAR(255) NOT NULL UNIQUE,
+  _password VARCHAR(255) NOT NULL,
+  _update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  _reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE USUARIO
+	ADD CONSTRAINT pk_USUARIO PRIMARY KEY (_id_usuario);
+
+-- Inserts Usuarios
+INSERT INTO USUARIO VALUES
+  ('GLwWqSUUjJ2ihdkS4Cxx','Dardo Camaño','dardocam@gmail.com','$2y$10$V2ZTNc4bmA./dCa3QpDJfuA68rbmZp2K.2y290.SIhp6JnXCrohj2',now(),now());
+
+-- Table:  Paciente
+CREATE TABLE PACIENTE
+(
+  _id_paciente VARCHAR(255) NOT NULL UNIQUE,
+  _nombre VARCHAR(255),
+  _apellido VARCHAR(255),
+  _dni VARCHAR(255),
+  _update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  _reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE PACIENTE
+	ADD CONSTRAINT pk_PACIENTE PRIMARY KEY (_id_paciente);
+
+-- Inserts Pacientes
+INSERT INTO PACIENTE VALUES
+  ('GLwWqSUUjJ2ihdkS4Cxx','Antonio','Perez','23525654',now(),now()),
+  ('GLwWqSUUjJ2ihdkS4Cx2','Damasco','Anchorena','32145698',now(),now()),
+
+-- Table:  Medicamento
+CREATE TABLE MEDICAMENTO
+(
+  _id_medicamento VARCHAR(255) NOT NULL UNIQUE,
+  _nombre VARCHAR(255),
+  _miligramos VARCHAR(255),
+  _descripcion VARCHAR(255),
+  _categoria VARCHAR(255),
+  _update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  _reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE MEDICAMENTO
+	ADD CONSTRAINT pk_MEDICAMENTO PRIMARY KEY (_id_medicamento);
+
+-- Inserts Medicamentos
+INSERT INTO MEDICAMENTO VALUES
+  ('GLwWqSUUjJ2ihdkS4Cxx','Buscapina',200,'Descripcion del medicamento....','Categoria',now(),now()),
+  ('GLwWqSUUjJ2ihdkS4Cax','Clonazepan',30,'Descripcion del medicamento....','Categoria',now(),now()),
+  ('DLwWqSUUjJ2ihdkS4Cax','Loratadina',100,'Descripcion del medicamento....','Categoria',now(),now());
+
+
+-- Table:  Stock
+CREATE TABLE STOCK
+(
+  _id_stock VARCHAR(255) NOT NULL UNIQUE,
+  _fk_id_medicamento VARCHAR(255) NOT NULL UNIQUE,
+  _cantidad INT,
+  _update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  _reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE STOCK
+	ADD CONSTRAINT pk_STOCK PRIMARY KEY (_id_stock),
+  ADD CONSTRAINT fk_MEDICAMENTO FOREIGN KEY (_fk_id_medicamento) REFERENCES MEDICAMENTO(_id_medicamento) MATCH SIMPLE
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
+
+-- Inserts Stock
+INSERT INTO STOCK VALUES
+  ('GLwWqSUUjJ2ihdkS4CxA','GLwWqSUUjJ2ihdkS4Cxx',100,now(),now()),
+  ('GLwWqSUUjJ2ihdkS4CZA','GLwWqSUUjJ2ihdkS4Cax',1200,now(),now());
+
+
+-- Table:  Mbase
+CREATE TABLE MBASE
+(
+  _fk_id_paciente VARCHAR(255) NOT NULL,
+  _fk_id_medicamento VARCHAR(255) NOT NULL,
+  _cantidad INT,
+  _update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  _reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE MBASE
+	ADD CONSTRAINT pk_MBASE PRIMARY KEY (_fk_id_paciente,_fk_id_medicamento),
+  ADD CONSTRAINT fk_MBASE_PACIENTE FOREIGN KEY (_fk_id_paciente) REFERENCES PACIENTE(_id_paciente) MATCH SIMPLE
+  ON UPDATE CASCADE
+  ON DELETE CASCADE,
+  ADD CONSTRAINT fk_MBASE_MEDICAMENTO FOREIGN KEY (_fk_id_medicamento) REFERENCES MEDICAMENTO(_id_medicamento) MATCH SIMPLE
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
+
+
+-- Inserts Mbase
+INSERT INTO MBASE VALUES
+  ('GLwWqSUUjJ2ihdkS4Cxx','GLwWqSUUjJ2ihdkS4Cax',500,now(),now()),
+  ('GLwWqSUUjJ2ihdkS4Cxx','GLwWqSUUjJ2ihdkS4Cxx',80,now(),now());

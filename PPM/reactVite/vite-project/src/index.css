@@ -1,0 +1,14 @@
+:root {
+  background-color: darkblue;
+}
+header {
+  background-color: darkolivegreen;
+  padding: 1rem;
+}
+ul li {
+  list-style: none;
+}
+.move {
+  position: relative;
+  left: 2rem;
+}
