@@ -17,8 +17,7 @@ ___
     );
 
     CREATE TABLE PerfilUsuario (
-        id_perfil INT PRIMARY KEY AUTO_INCREMENT,
-        fk_id_empleado INT UNIQUE NULL,
+        fk_id_empleado INT PRIMARY KEY AUTO_INCREMENT,
         direccion VARCHAR(255) NOT NULL,
         telefono VARCHAR(15) NOT NULL,
         CONSTRAINT fk_empleado_perfil FOREIGN KEY (fk_id_empleado) REFERENCES Empleado(id_empleado)
